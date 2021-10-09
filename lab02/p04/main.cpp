@@ -17,5 +17,5 @@ int main()
         cin >> x >> y;
         long long out = (x / 3) * (y / 3);
         cout << out << "\n";
-    }
+    } 
 }
