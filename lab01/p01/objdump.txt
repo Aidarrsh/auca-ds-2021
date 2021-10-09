@@ -1,0 +1,68 @@
+
+main.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <main>:
+#include <iostream>
+
+int main() {
+   0:	f3 0f 1e fa          	endbr64 
+   4:	55                   	push   %rbp
+   5:	48 89 e5             	mov    %rsp,%rbp
+    
+#ifdef AUCA_DEBUG
+    std::cout << "Author: Aidar Sharipov\n";
+#endif
+    std::cout << "Hello, C++" << __cplusplus << "!!!\n";  
+   8:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # f <main+0xf>
+   f:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # 16 <main+0x16>
+  16:	e8 00 00 00 00       	callq  1b <main+0x1b>
+  1b:	be ba 12 03 00       	mov    $0x312ba,%esi
+  20:	48 89 c7             	mov    %rax,%rdi
+  23:	e8 00 00 00 00       	callq  28 <main+0x28>
+  28:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # 2f <main+0x2f>
+  2f:	48 89 c7             	mov    %rax,%rdi
+  32:	e8 00 00 00 00       	callq  37 <main+0x37>
+  37:	b8 00 00 00 00       	mov    $0x0,%eax
+  3c:	5d                   	pop    %rbp
+  3d:	c3                   	retq   
+
+000000000000003e <_Z41__static_initialization_and_destruction_0ii>:
+  3e:	f3 0f 1e fa          	endbr64 
+  42:	55                   	push   %rbp
+  43:	48 89 e5             	mov    %rsp,%rbp
+  46:	48 83 ec 10          	sub    $0x10,%rsp
+  4a:	89 7d fc             	mov    %edi,-0x4(%rbp)
+  4d:	89 75 f8             	mov    %esi,-0x8(%rbp)
+  50:	83 7d fc 01          	cmpl   $0x1,-0x4(%rbp)
+  54:	75 32                	jne    88 <_Z41__static_initialization_and_destruction_0ii+0x4a>
+  56:	81 7d f8 ff ff 00 00 	cmpl   $0xffff,-0x8(%rbp)
+  5d:	75 29                	jne    88 <_Z41__static_initialization_and_destruction_0ii+0x4a>
+  extern wostream wclog;	/// Linked to standard error (buffered)
+#endif
+  //@}
+
+  // For construction of filebuffers for cout, cin, cerr, clog et. al.
+  static ios_base::Init __ioinit;
+  5f:	48 8d 3d 00 00 00 00 	lea    0x0(%rip),%rdi        # 66 <_Z41__static_initialization_and_destruction_0ii+0x28>
+  66:	e8 00 00 00 00       	callq  6b <_Z41__static_initialization_and_destruction_0ii+0x2d>
+  6b:	48 8d 15 00 00 00 00 	lea    0x0(%rip),%rdx        # 72 <_Z41__static_initialization_and_destruction_0ii+0x34>
+  72:	48 8d 35 00 00 00 00 	lea    0x0(%rip),%rsi        # 79 <_Z41__static_initialization_and_destruction_0ii+0x3b>
+  79:	48 8b 05 00 00 00 00 	mov    0x0(%rip),%rax        # 80 <_Z41__static_initialization_and_destruction_0ii+0x42>
+  80:	48 89 c7             	mov    %rax,%rdi
+  83:	e8 00 00 00 00       	callq  88 <_Z41__static_initialization_and_destruction_0ii+0x4a>
+  88:	90                   	nop
+  89:	c9                   	leaveq 
+  8a:	c3                   	retq   
+
+000000000000008b <_GLOBAL__sub_I_main>:
+  8b:	f3 0f 1e fa          	endbr64 
+  8f:	55                   	push   %rbp
+  90:	48 89 e5             	mov    %rsp,%rbp
+  93:	be ff ff 00 00       	mov    $0xffff,%esi
+  98:	bf 01 00 00 00       	mov    $0x1,%edi
+  9d:	e8 9c ff ff ff       	callq  3e <_Z41__static_initialization_and_destruction_0ii>
+  a2:	5d                   	pop    %rbp
+  a3:	c3                   	retq   
