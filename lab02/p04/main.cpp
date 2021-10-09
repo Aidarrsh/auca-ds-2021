@@ -2,6 +2,20 @@
 
 using namespace std;
 
+int f(int x)
+{
+    x = x % 100;
+    if (abs(x) < 10)
+    {
+        x = 0;
+    }
+    while (abs(x) >= 10)
+    {
+        x /= 10;
+    }
+    return x;
+}
+
 
 int main()
 
@@ -10,12 +24,14 @@ int main()
     cin.tie(0);
     cout.tie(0);
 
-    long long n, x, y;
+    int n;
     cin >> n;
-    while (n--)
+    for (int i = 0; i < n; i++)
     {
-        cin >> x >> y;
-        long long out = (x / 3) * (y / 3);
-        cout << out << "\n";
-    } 
+        int y;
+        cin >> y;
+        int x = (y * 567 / 9 + 7492) * 235 / 47 - 498;
+        x = f(x);
+        cout << abs(x) << "\n";
+    }
 }
