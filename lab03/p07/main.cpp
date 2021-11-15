@@ -25,6 +25,17 @@ class Game {
             }
         }
         lines.push_back(str);
+        if (i == 6){
+            lines.push_back("/8");  ////////
+        }
+    }
+
+    void fillEmpty(){
+        for (int i = 0; i < 8; i ++){
+            for (int j = 0; j < 8; j ++){
+                
+            }
+        }
     }
     
     void fillCells(){
@@ -43,12 +54,231 @@ class Game {
         }
     }
     
-    void kingCheck(){
+    void king(){
         for (int x = 0; x < 8; x ++){
             for (int y = 0; y < 8; y ++){
                 if (cells[x][y] == 'K' || cells[x][y] == 'k'){
-                    
+                    kingMoveDiagonal(x,y);
+                    kingMoveStraight(x,y);
                 }
+            }
+        }
+    }
+    
+    void kingMoveDiagonal(int x, int y){
+        pawnWhiteMove(x,y);
+        pawnBlackMove(x,y);
+    }
+    
+    void kingMoveStraight(int x, int y){
+        if (x != 0 && y != 0 && x != 7 && y != 7){
+            if (cells[x-1][y] == 'e'){cells[x-1][y] = 'A';}
+            if (cells[x+1][y] == 'e'){cells[x+1][y] = 'A';}
+            if (cells[x][y-1] == 'e'){cells[x][y-1] = 'A';}
+            if (cells[x][y+1] == 'e'){cells[x][y+1] = 'A';}
+        }
+        if (x == 0) {if (cells[x+1][y] == 'e') cells[x+1][y] = 'A';}
+        if (x == 7) {if (cells[x-1][y] == 'e') cells[x-1][y] = 'A';} 
+        if (y == 0) {if (cells[x][y+1] == 'e') cells[x][y+1] = 'A';}
+        if (y == 7) {if (cells[x][y-1] == 'e') cells[x][y-1] = 'A';}
+        if (y != 0) {if (cells[x][y-1] == 'e') cells[x][y-1] = 'A';}
+        if (y != 7) {if (cells[x][y+1] == 'e') cells[x][y+1] = 'A';}
+        if (x != 0) {if (cells[x-1][y] == 'e') cells[x-1][y] = 'A';}
+        if (x != 7) {if (cells[x+1][y] == 'e') cells[x+1][y] = 'A';}
+    }
+    
+    void pawnBlack(){
+        for (int x = 0; x < 8; x ++){
+            for (int y = 0; y < 8; y ++){
+                if (cells[x][y] == 'p'){
+                    pawnBlackMove(x,y);
+                }
+            }
+        }
+    }
+    
+    void pawnWhite(){
+        for (int x = 0; x < 8; x ++){
+            for (int y = 0; y < 8; y ++){
+                if (cells[x][y] == 'P'){
+                    pawnWhiteMove(x,y);
+                }
+            }
+        }
+    }
+    
+    void pawnWhiteMove(int x, int y){
+        if (x != 0 && y != 0 && y !=7){
+            if (cells[x-1][y-1] == 'e'){cells[x-1][y-1] = 'A';}
+            if (cells[x-1][y+1] == 'e'){cells[x-1][y+1] = 'A';}
+        } else if (x != 0 && y == 0){
+            if (cells[x-1][y+1] == 'e'){cells[x-1][y+1] = 'A';}
+        } else if (x != 0 && y == 7){  //
+            if (cells[x-1][y-1] == 'e'){cells[x-1][y-1] = 'A';}
+        }
+    }
+    
+    void pawnBlackMove(int x, int y){
+        if (x != 7 && y != 0 && y !=7){
+            if (cells[x+1][y-1] == 'e'){cells[x+1][y-1] = 'A';}
+            if (cells[x+1][y+1] == 'e'){cells[x+1][y+1] = 'A';}
+        } else if (x != 7 && y == 0){   //
+            if (cells[x+1][y+1] == 'e'){cells[x+1][y+1] = 'A';}
+        } else if (x != 7 && y == 7){
+            if (cells[x+1][y-1] == 'e'){cells[x+1][y-1] = 'A';}
+        }
+    }
+    
+    void bishop(){
+        for (int x = 0; x < 8; x ++){
+            for (int y = 0; y < 8; y ++){
+                if (cells[x][y] == 'b' || cells[x][y] == 'B'){
+                    bishopMove(x,y);
+                }
+            }
+        }
+    }
+    
+    void bishopMove(int a, int b){
+        int x = a; int y = b;
+        while (x != 0 && y != 0){x--;y--;
+            if (cells[x][y] == 'e' || cells[x][y] == 'A'){cells[x][y] = 'A';}
+            else {break;}
+        }
+        x = a; y = b;
+        while (x != 7 && y != 7){
+            x++; y++;
+            if (cells[x][y] == 'e' || cells[x][y] == 'A'){cells[x][y] = 'A';}
+            else {break;}
+        }
+        x = a; y = b;
+        while (x != 0 && y != 7){
+            x--; y++;
+            if (cells[x][y] == 'e' || cells[x][y] == 'A'){cells[x][y] = 'A';}
+            else {break;}
+        }
+        x = a; y = b;
+        while (x != 7 && y != 0){
+            x++; y--;
+            if (cells[x][y] == 'e' || cells[x][y] == 'A'){cells[x][y] = 'A';}
+            else {break;}
+        }
+        x = a; y = b;
+    }
+    
+    void rook(){
+        for (int x = 0; x < 8; x ++){
+            for (int y = 0; y < 8; y ++){
+                if (cells[x][y] == 'r' || cells[x][y] == 'R'){
+                    rookMove(x,y);
+                }
+            }
+        }
+    }
+    
+    void rookMove(int a, int b){
+        int x = a; int y = b;
+        while (x != 0){ 
+            x--;
+            if (cells[x][y] == 'e' || cells[x][y] == 'A'){cells[x][y] = 'A';}
+            else {break;}
+        }
+        x = a; y = b;
+        while (x != 7){
+            x++;
+            if (cells[x][y] == 'e' || cells[x][y] == 'A'){cells[x][y] = 'A';}
+            else {break;}
+        }
+        x = a; y = b;
+        while (y != 0){
+            y--;
+            if (cells[x][y] == 'e' || cells[x][y] == 'A'){cells[x][y] = 'A';}
+            else {break;}
+        }
+        x = a; y = b;
+        while (y != 7){
+            y++;
+            if (cells[x][y] == 'e' || cells[x][y] == 'A'){cells[x][y] = 'A';}
+            else {break;}
+        }
+        x = a; y = b;
+    }
+    
+    void queen(){
+        for (int x = 0; x < 8; x ++){
+            for (int y = 0; y < 8; y ++){
+                if (cells[x][y] == 'q' || cells[x][y] == 'Q'){
+                    queenMove(x,y);
+                }
+            }
+        }
+    }
+    
+    void queenMove(int x, int y){
+        rookMove(x,y);
+        bishopMove(x,y);
+    }
+    
+    void knight(){
+        for (int x = 0; x < 8; x ++){
+            for (int y = 0; y < 8; y ++){
+                if (cells[x][y] == 'n' || cells[x][y] == 'N'){
+                    knightMoveUp(x,y);
+                    knightMoveDown(x,y);
+                    knightMoveLeft(x,y);
+                    knightMoveRight(x,y);
+                }
+            }
+        }
+    }
+    
+    void knightMoveUp(int x, int y){
+        if (x != 0 && x != 1){
+            if (y != 0 && y != 7){
+                if (cells[x-2][y-1] == 'e' || cells[x-2][y-1] == 'A'){cells[x-2][y-1] = 'A';}
+                if (cells[x-2][y+1] == 'e' || cells[x-2][y+1] == 'A'){cells[x-2][y+1] = 'A';}
+            } else if (y == 0){
+                if (cells[x-2][y+1] == 'e' || cells[x-2][y+1] == 'A'){cells[x-2][y+1] = 'A';}
+            } else if (y == 7){
+                if (cells[x-2][y-1] == 'e' || cells[x-2][y-1] == 'A'){cells[x-2][y-1] = 'A';}
+            }
+        }
+    }
+    
+    void knightMoveDown(int x, int y){
+        if (x != 7 && x != 6){
+            if (y != 0 && y != 7){
+                if (cells[x+2][y-1] == 'e' || cells[x+2][y-1] == 'A'){cells[x+2][y-1] = 'A';}
+                if (cells[x+2][y+1] == 'e' || cells[x+2][y+1] == 'A'){cells[x+2][y+1] = 'A';}
+            } else if (y == 0){
+                if (cells[x+2][y+1] == 'e' || cells[x+2][y+1] == 'A'){cells[x+2][y+1] = 'A';}
+            } else if (y == 7){
+                if (cells[x+2][y-1] == 'e' || cells[x+2][y-1] == 'A'){cells[x+2][y-1] = 'A';}
+            }
+        }
+    }
+    
+    void knightMoveRight(int x, int y){
+        if (y != 7 && y != 6){
+            if (x != 0 && x != 7){
+                if (cells[x-1][y+2] == 'e' || cells[x-1][y+2] == 'A'){cells[x-1][y+2] = 'A';}
+                if (cells[x+1][y+2] == 'e' || cells[x+1][y+2] == 'A'){cells[x+1][y+2] = 'A';}
+            } else if (x == 0){
+                if (cells[x+1][y+2] == 'e' || cells[x+1][y+2] == 'A'){cells[x+1][y+2] = 'A';}} else if (x == 7){
+                if (cells[x-1][y+2] == 'e' || cells[x-1][y+2] == 'A'){cells[x-1][y+2] = 'A';}
+            }
+        }
+    }
+    
+    void knightMoveLeft(int x, int y){
+        if (y != 0 && y != 1){
+            if (x != 0 && x != 7){
+                if (cells[x-1][y-2] == 'e' || cells[x-1][y-2] == 'A'){cells[x-1][y-2] = 'A';}
+                if (cells[x+1][y-2] == 'e' || cells[x+1][y-2] == 'A'){cells[x+1][y-2] = 'A';}
+            } else if (x == 0){
+                if (cells[x+1][y-2] == 'e' || cells[x+1][y-2] == 'A'){cells[x+1][y-2] = 'A';}
+            } else if (x == 7){
+                if (cells[x-1][y-2] == 'e' || cells[x-1][y-2] == 'A'){cells[x-1][y-2] = 'A';}
             }
         }
     }
@@ -62,6 +292,15 @@ class Game {
         }
     }
     
+    void findAnswer(){
+        for (int i = 0; i < 8; i ++){
+            for (int j = 0; j < 8; j ++){
+                if (cells[i][j] == 'e') {result ++;}
+            }
+        }
+        cout <<result<<"\n";
+    }
+    
     public:
     Game(string str)
     :cells(8)
@@ -72,11 +311,17 @@ class Game {
     void solve(){
         read(snf);
         fillCells();
-        runCheck();
-        kingCheck();
+        pawnWhite();
+        pawnBlack();
+        king();
+        bishop();
+        rook();
+        queen();
+        knight();
+    //    runCheck();
+        findAnswer();
     }
 };
-
 
 int main()
 {
@@ -85,6 +330,5 @@ int main()
     for (string snf; getline(cin,snf);){
         Game game(snf);
         game.solve();
-    //    cout << game.solve()<<"\n";
     }
 }
