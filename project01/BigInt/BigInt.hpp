@@ -48,6 +48,16 @@ public:
             }
         }
     }
+
+    const std::vector<int> getVector()
+    {
+        return mDigits;
+    }
+
+    const bool getBool()
+    {
+        return mIsNegative;
+    }
    
 };
 
@@ -62,4 +72,25 @@ std::ostream &operator<<(std::ostream &out, const BigInt &x)
         out << digit;
     }
     return out;
+}
+
+BigInt operator+(const BigInt &a, const BigInt &b)
+{
+    vector <int> x = a.getVector();
+    vector <int> y = b.getVector();
+    if (x.size() < y.size()){
+        x.swap(y);
+    }
+    int diff;
+    diff = x.size() - y.size();
+    reverse(y.begin(), y.end());
+    for (int i = 0; i < y.size(); i++){
+        y.push_back(0);
+    }
+    reverse(y.begin(),y.end());
+    for (int i = 0; i < x.size(); i ++){
+        for (int j = 0; j < y.size(); j ++){
+            
+        }
+    }
 }
