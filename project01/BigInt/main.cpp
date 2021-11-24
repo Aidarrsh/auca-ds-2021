@@ -14,3 +14,26 @@ TEST_CASE("Default constructor")
 
     REQUIRE(sout.str() == "0");
 }
+
+TEST_CASE("Integer constructor")
+{
+    ostringstream sout;
+
+    SUBCASE("Test with 228")
+    {
+        BigInt a(228);
+
+        sout << a;
+
+        REQUIRE(sout.str() == "228");
+    }
+
+    SUBCASE("Test with -23082002")
+    {
+        BigInt a(-23082202);
+
+        sout << a;
+
+        REQUIRE(sout.str() = "-23082002");
+    }
+}
