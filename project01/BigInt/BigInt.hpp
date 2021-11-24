@@ -1,6 +1,9 @@
 #pragma once
 #include <vector>
 #include <iosfwd>
+#include <string>
+#include <cstdint>
+#include <iostream>
 
 class BigInt {
     friend std::ostream &operator<<(std::ostream &out, const BigInt &x);
@@ -31,6 +34,19 @@ public:
         }
 
         reverse(mDigits.begin(), mDigits.end());
+    }
+
+    BigInt (std::string str){
+        mIsNegative = false;
+        for (auto num : str){
+            if (num == '-'){
+                mIsNegative = true;
+            } else if (isdigit(num)){
+                mDigits.push_back((int) num -48);
+            } else if (isalpha(num)){
+                throw std::runtime_error("Input must be integer");
+            }
+        }
     }
    
 };
