@@ -66,3 +66,28 @@ TEST_CASE("String constructor")
         REQUIRE_THROWS_AS(BigInt a("Aidar");, runtime_error);
     }
 }
+
+TEST_CASE("Addition")
+{
+    ostringstream sout;
+
+    SUBCASE("123 + 19")
+    {
+        BigInt x(123);
+        BigInt y(19);
+
+        sout << x + y;
+
+        REQUIRE(sout.str() == "142");
+    }
+
+    SUBCASE("123456789 + 228")
+    {
+        BigInt x(123456789);
+        BigInt y(228);
+
+        sout << x + y;
+
+        REQUIRE(sout.str() == "123457017");
+    }
+}

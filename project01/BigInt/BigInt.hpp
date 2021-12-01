@@ -8,10 +8,11 @@
 class BigInt {
     friend std::ostream &operator<<(std::ostream &out, const BigInt &x);
     friend std::istream &operator>>(std::istream &inp, BigInt &x);
-    std::vector<int> mDigits;
-    bool mIsNegative;
+    
 
 public:
+    std::vector<int> mDigits;
+    bool mIsNegative;
     BigInt ()
         : mIsNegative(false) 
     {
@@ -48,17 +49,6 @@ public:
             }
         }
     }
-
-    const std::vector<int> getVector()
-    {
-        return mDigits;
-    }
-
-    const bool getBool()
-    {
-        return mIsNegative;
-    }
-   
 };
 
 inline
@@ -74,23 +64,31 @@ std::ostream &operator<<(std::ostream &out, const BigInt &x)
     return out;
 }
 
-BigInt operator+(const BigInt &a, const BigInt &b)
+BigInt operator+( BigInt b1, BigInt b2) 
 {
-    vector <int> x = a.getVector();
-    vector <int> y = b.getVector();
-    if (x.size() < y.size()){
-        x.swap(y);
-    }
-    int diff;
-    diff = x.size() - y.size();
-    reverse(y.begin(), y.end());
-    for (int i = 0; i < y.size(); i++){
-        y.push_back(0);
-    }
-    reverse(y.begin(),y.end());
-    for (int i = 0; i < x.size(); i ++){
-        for (int j = 0; j < y.size(); j ++){
-            
+    BigInt r;
+    r.mDigits.clear();
+    reverse(b1.mDigits.begin(), b1.mDigits.end());
+    reverse(b2.mDigits.begin(), b2.mDigits.end());
+
+    auto it1 = b1.mDigits.begin();
+    auto it2 = b2.mDigits.begin();
+    int cur = 0;
+    while(it1 !=  b1.mDigits.end() || it2 != b2.mDigits.end() || cur != 0) {
+        int sum = cur;
+        if (it1 != b1.mDigits.end()) {
+            sum += *it1;
+            it1++;
         }
+
+        if (it2 != b2.mDigits.end()) {
+            sum += *it2;
+            it2 ++;
+        }
+
+        r.mDigits.push_back(sum % 10);
+        cur = sum / 10;
     }
+    reverse(r.mDigits.begin(), r.mDigits.end());
+    return r;
 }
