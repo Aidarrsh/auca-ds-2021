@@ -64,31 +64,64 @@ std::ostream &operator<<(std::ostream &out, const BigInt &x)
     return out;
 }
 
-BigInt operator+( BigInt b1, BigInt b2) 
+BigInt operator+( BigInt a, BigInt b) 
 {
     BigInt r;
     r.mDigits.clear();
-    reverse(b1.mDigits.begin(), b1.mDigits.end());
-    reverse(b2.mDigits.begin(), b2.mDigits.end());
+    reverse(a.mDigits.begin(), a.mDigits.end());
+    reverse(b.mDigits.begin(), b.mDigits.end());
 
-    auto it1 = b1.mDigits.begin();
-    auto it2 = b2.mDigits.begin();
-    int cur = 0;
-    while(it1 !=  b1.mDigits.end() || it2 != b2.mDigits.end() || cur != 0) {
-        int sum = cur;
-        if (it1 != b1.mDigits.end()) {
+    auto it1 = a.mDigits.begin();
+    auto it2 = b.mDigits.begin();
+    int carry = 0;
+    while(it1 !=  a.mDigits.end() || it2 != b.mDigits.end() || carry != 0) {
+        int sum = carry;
+        if (it1 != a.mDigits.end()) {
             sum += *it1;
             it1++;
         }
 
-        if (it2 != b2.mDigits.end()) {
+        if (it2 != b.mDigits.end()) {
             sum += *it2;
             it2 ++;
         }
 
         r.mDigits.push_back(sum % 10);
-        cur = sum / 10;
+        carry = sum / 10;
     }
     reverse(r.mDigits.begin(), r.mDigits.end());
     return r;
+}
+
+BigInt operator-(BigInt a, BigInt b)
+{
+    BigInt r;
+    r.mDigits.clear();
+    reverse(a.mDigits.begin(), a.mDigits.end());
+    reverse(b.mDigits.begin(), b.mDigits.end());
+    
+    auto it1 = a.mDigits.begin();
+    auto it2 = b.mDigits.begin();
+    int carry = 0;
+}
+
+bool operator==(BigInt a, BigInt b)
+{
+    if (a.mDigits.size() == b.mDigits.size() && a.mIsNegative == b.mIsNegative)
+    {
+        auto ita = a.mDigits.begin();
+        auto itb = b.mDigits.begin();
+        while (ita != a.mDigits.end())
+        {
+            if (*ita == *itb) {
+                ita++;
+                itb++;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    } else {
+        return false;
+    }
 }

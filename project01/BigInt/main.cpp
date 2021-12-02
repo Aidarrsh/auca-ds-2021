@@ -91,3 +91,16 @@ TEST_CASE("Addition")
         REQUIRE(sout.str() == "123457017");
     }
 }
+
+TEST_CASE("COMPARE")
+{
+    ostringstream sout;
+    
+    SUBCASE("2021 == 2021")
+    {
+        BigInt x("2021");
+        BigInt y("2021");
+
+        REQUIRE(x == y);
+    }
+}
