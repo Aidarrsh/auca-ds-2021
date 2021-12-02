@@ -175,5 +175,31 @@ bool operator<( BigInt a, BigInt b)
 
 bool operator>=(BigInt a, BigInt b)
 {
-    
+    if (a == b) {
+        return true;
+    } else if (a > b){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool operator<=(BigInt a, BigInt b)
+{
+    if (a == b) {
+        return true;
+    } else if (a < b){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool operator!=(BigInt a, BigInt b)
+{
+    if (a == b){
+        return false;
+    } else {
+        return true;
+    }
 }

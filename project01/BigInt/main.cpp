@@ -119,4 +119,44 @@ TEST_CASE("COMPARE")
 
         REQUIRE(x < y);
     }
+
+    SUBCASE("2021 >= 2020")
+    {
+        BigInt x("2021");
+        BigInt y(2020);
+
+        REQUIRE(x >= y);
+    }
+
+    SUBCASE("2021 >= 2021")
+    {
+        BigInt x("2021");
+        BigInt y(2021);
+
+        REQUIRE(x >= y);
+    }
+
+    SUBCASE("2021 <= 2021")
+    {
+        BigInt x("2021");
+        BigInt y(2021);
+
+        REQUIRE(x <= y);
+    }
+
+    SUBCASE("2077 >= 2021")
+    {
+        BigInt x("2077");
+        BigInt y(2021);
+
+        REQUIRE(x >= y);
+    }
+
+    SUBCASE("2021 != 2077")
+    {
+        BigInt x("2021");
+        BigInt y(2077);
+
+        REQUIRE(x != y);
+    }
 }
