@@ -125,3 +125,55 @@ bool operator==(BigInt a, BigInt b)
         return false;
     }
 }
+
+bool operator>(BigInt a, BigInt b)
+{
+    if (a == b){
+        return false;
+    } else {
+        if (a.mIsNegative != b.mIsNegative){
+            if (a.mIsNegative){
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            if (a.mDigits.size() > b.mDigits.size()){
+                return true;
+            } else if (a.mDigits.size() < b.mDigits.size()) {
+                return false;
+            }
+            else {
+                auto ita = a.mDigits.begin();
+                auto itb = b.mDigits.begin();
+                while (ita != a.mDigits.end()){
+                    if (*ita > *itb){
+                        return true;
+                    } else if (*ita < *itb){
+                        return false;
+                    } else {
+                        ita++;
+                        itb++;
+                    }
+                }
+                return false;
+            }
+        }
+    }
+}
+
+bool operator<( BigInt a, BigInt b) 
+{
+    if (a == b) {
+        return false;
+    } else if (a > b) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+bool operator>=(BigInt a, BigInt b)
+{
+    
+}

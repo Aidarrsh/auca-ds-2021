@@ -99,8 +99,24 @@ TEST_CASE("COMPARE")
     SUBCASE("2021 == 2021")
     {
         BigInt x("2021");
-        BigInt y("2021");
+        BigInt y(2021);
 
         REQUIRE(x == y);
+    }
+
+    SUBCASE("2021 > 2002")
+    {
+        BigInt x("2021");
+        BigInt y(2002);
+
+        REQUIRE(x > y);
+    }
+
+    SUBCASE("2021 < 2077")
+    {
+        BigInt x("2021");
+        BigInt y(2077);
+
+        REQUIRE(x < y);
     }
 }
