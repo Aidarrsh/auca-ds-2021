@@ -92,6 +92,16 @@ TEST_CASE("Addition")
 
 
     }
+
+    SUBCASE("-5 + 5")
+    {
+        BigInt x(-5);
+        BigInt y(5);
+
+        sout << x - y;
+
+        REQUIRE(sout.str() == "0");
+    }
 }
 
 TEST_CASE("Substraction")
@@ -106,6 +116,65 @@ TEST_CASE("Substraction")
         sout << x - y;
 
         REQUIRE(sout.str() == "-2");
+    }
+
+    SUBCASE("82-100")
+    {
+        BigInt x(82);
+        BigInt y(100);
+
+        sout << x - y;
+
+        REQUIRE(sout.str() == "-18");
+    }
+
+    SUBCASE("100-82")
+    {
+        BigInt x(100);
+        BigInt y(82);
+
+        sout << x - y;
+
+        REQUIRE(sout.str() == "18");
+    }
+    SUBCASE("5-5")
+    {
+        BigInt x(5);
+        BigInt y(5);
+
+        sout << x - y;
+
+        REQUIRE(sout.str() == "0");
+    }
+
+    SUBCASE("5-(-5)")
+    {
+        BigInt x(5);
+        BigInt y(-5);
+
+        sout << x - y;
+
+        REQUIRE(sout.str() == "10");
+    }
+
+    SUBCASE("-5 - 5")
+    {
+        BigInt x(-5);
+        BigInt y(5);
+
+        sout << x - y;
+
+        REQUIRE(sout.str() == "-10");
+    }
+
+    SUBCASE("-5 - (-5)")
+    {
+        BigInt x(-5);
+        BigInt y(-5);
+
+        sout << x - y;
+
+        REQUIRE(sout.str() == "0");
     }
 }
 

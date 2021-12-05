@@ -64,71 +64,6 @@ std::ostream &operator<<(std::ostream &out, const BigInt &x)
     return out;
 }
 
-BigInt operator+( BigInt a, BigInt b) 
-{
-    BigInt r;
-    r.mDigits.clear();
-    reverse(a.mDigits.begin(), a.mDigits.end());
-    reverse(b.mDigits.begin(), b.mDigits.end());
-
-    auto it1 = a.mDigits.begin();
-    auto it2 = b.mDigits.begin();
-    int carry = 0;
-    while(it1 !=  a.mDigits.end() || it2 != b.mDigits.end() || carry != 0) {
-        int sum = carry;
-        if (it1 != a.mDigits.end()) {
-            sum += *it1;
-            it1++;
-        }
-
-        if (it2 != b.mDigits.end()) {
-            sum += *it2;
-            it2 ++;
-        }
-
-        r.mDigits.push_back(sum % 10);
-        carry = sum / 10;
-    }
-    reverse(r.mDigits.begin(), r.mDigits.end());
-    return r;
-}
-
-BigInt operator-(BigInt a, BigInt b)
-{
-    BigInt r;
-    r.mDigits.clear();
-    if (a < b){
-        r.mIsNegative = true;
-    }
-    reverse(a.mDigits.begin(), a.mDigits.end());
-    reverse(b.mDigits.begin(), b.mDigits.end());
-    
-    auto it1 = a.mDigits.begin();
-    auto it2 = b.mDigits.begin();
-    int carry = 0;
-    while(it1 !=  a.mDigits.end() || it2 != b.mDigits.end()) {
-        int sum = carry;
-        carry = 0;
-        if (it1 != a.mDigits.end()) {
-            sum += *it1;
-            it1++;
-        }
-
-        if (it2 != b.mDigits.end()) {
-            sum -= *it2;
-            if (sum < 0){
-                carry++;
-            }
-            sum = abs(sum);
-            it2 ++;
-        }
-
-        r.mDigits.push_back(sum);
-    }
-    reverse(r.mDigits.begin(), r.mDigits.end());
-    return r;
-}
-
 bool operator==(BigInt a, BigInt b)
 {
     if (a.mDigits.size() == b.mDigits.size() && a.mIsNegative == b.mIsNegative)
@@ -226,4 +161,94 @@ bool operator!=(BigInt a, BigInt b)
     } else {
         return true;
     }
+}
+
+BigInt operator+( BigInt a, BigInt b) 
+{
+    BigInt r;
+    r.mDigits.clear();
+    reverse(a.mDigits.begin(), a.mDigits.end());
+    reverse(b.mDigits.begin(), b.mDigits.end());
+
+    auto it1 = a.mDigits.begin();
+    auto it2 = b.mDigits.begin();
+    int carry = 0;
+    while(it1 !=  a.mDigits.end() || it2 != b.mDigits.end() || carry != 0) {
+        int sum = carry;
+        if (it1 != a.mDigits.end()) {
+            sum += *it1;
+            it1++;
+        }
+
+        if (it2 != b.mDigits.end()) {
+            sum += *it2;
+            it2 ++;
+        }
+
+        r.mDigits.push_back(sum % 10);
+        carry = sum / 10;
+    }
+    reverse(r.mDigits.begin(), r.mDigits.end());
+    return r;
+}
+
+BigInt operator-(BigInt a, BigInt b)
+{
+    BigInt r;
+    r.mDigits.clear();
+    if (a < b){
+        r.mIsNegative = true;
+        std::swap(a,b);
+    }
+
+    if (a == b){
+        r.mDigits.push_back(0);
+        return r;
+    }
+
+    if (a.mIsNegative){
+        r.mIsNegative = true;
+        return a + b;
+    }
+
+    if (b.mIsNegative){
+        r.mIsNegative = false;
+        return a + b;
+    }
+
+    if (a.mIsNegative && b.mIsNegative){
+        std::swap(a,b);
+    }
+    reverse(a.mDigits.begin(), a.mDigits.end());
+    reverse(b.mDigits.begin(), b.mDigits.end());
+    
+    auto it1 = a.mDigits.begin();
+    auto it2 = b.mDigits.begin();
+    int carry = 0;
+    while(it1 !=  a.mDigits.end() || it2 != b.mDigits.end()) {
+        int sum = carry;
+        carry = 0;
+        if (it1 != a.mDigits.end()) {
+            sum += *it1;
+            if (*it1 == 0){
+                sum += 10;
+                carry --;
+            }
+            it1++;
+        }
+
+        if (it2 != b.mDigits.end()) {
+            sum -= *it2;
+            // if (*it2 == 0){
+            //     sum -= 10;
+            // }
+            sum = abs(sum);
+            it2 ++;
+        }
+        if (sum != 0 && (it1 != a.mDigits.end() || it2 != b.mDigits.end())){
+            r.mDigits.push_back(sum % 10);
+        }
+    }
+    reverse(r.mDigits.begin(), r.mDigits.end());
+    return r;
 }
