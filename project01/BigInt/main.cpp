@@ -89,6 +89,23 @@ TEST_CASE("Addition")
         sout << x + y;
 
         REQUIRE(sout.str() == "123457017");
+
+
+    }
+}
+
+TEST_CASE("Substraction")
+{
+    ostringstream sout;
+
+    SUBCASE("45-47")
+    {
+        BigInt x(45);
+        BigInt y(47);
+
+        sout << x - y;
+
+        REQUIRE(sout.str() == "-2");
     }
 }
 

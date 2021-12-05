@@ -97,12 +97,36 @@ BigInt operator-(BigInt a, BigInt b)
 {
     BigInt r;
     r.mDigits.clear();
+    if (a < b){
+        r.mIsNegative = true;
+    }
     reverse(a.mDigits.begin(), a.mDigits.end());
     reverse(b.mDigits.begin(), b.mDigits.end());
     
     auto it1 = a.mDigits.begin();
     auto it2 = b.mDigits.begin();
     int carry = 0;
+    while(it1 !=  a.mDigits.end() || it2 != b.mDigits.end()) {
+        int sum = carry;
+        carry = 0;
+        if (it1 != a.mDigits.end()) {
+            sum += *it1;
+            it1++;
+        }
+
+        if (it2 != b.mDigits.end()) {
+            sum -= *it2;
+            if (sum < 0){
+                carry++;
+            }
+            sum = abs(sum);
+            it2 ++;
+        }
+
+        r.mDigits.push_back(sum);
+    }
+    reverse(r.mDigits.begin(), r.mDigits.end());
+    return r;
 }
 
 bool operator==(BigInt a, BigInt b)
