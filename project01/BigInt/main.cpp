@@ -93,20 +93,30 @@ TEST_CASE("Addition")
 
     }
 
-    SUBCASE("-5 + 5")
-    {
-        BigInt x(-5);
-        BigInt y(5);
+    // SUBCASE("-5 + 5")
+    // {
+    //     BigInt x(-5);
+    //     BigInt y(5);
 
-        sout << x - y;
+    //     sout << x - y;
 
-        REQUIRE(sout.str() == "0");
-    }
+    //     REQUIRE(sout.str() == "0");
+    // }
 }
 
 TEST_CASE("Substraction")
 {
     ostringstream sout;
+
+    SUBCASE("12-7")
+    {
+        BigInt x(12);
+        BigInt y(7);
+
+        sout << x - y;
+
+        REQUIRE(sout.str() == "5");
+    }
 
     SUBCASE("45-47")
     {
@@ -167,14 +177,24 @@ TEST_CASE("Substraction")
         REQUIRE(sout.str() == "-10");
     }
 
-    SUBCASE("-5 - (-5)")
+    SUBCASE("-200 - (-5)")  // 5-200     
     {
-        BigInt x(-5);
+        BigInt x(-200);
         BigInt y(-5);
 
         sout << x - y;
 
-        REQUIRE(sout.str() == "0");
+        REQUIRE(sout.str() == "-195");
+    }
+
+    SUBCASE("5 - 200")  // 5-200     
+    {
+        BigInt x(5);
+        BigInt y(200);
+
+        sout << x - y;
+
+        REQUIRE(sout.str() == "-195");
     }
 }
 
