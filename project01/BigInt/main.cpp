@@ -93,15 +93,45 @@ TEST_CASE("Addition")
 
     }
 
-    // SUBCASE("-5 + 5")
-    // {
-    //     BigInt x(-5);
-    //     BigInt y(5);
+    SUBCASE("-5 + 5")
+    {
+        BigInt x(-5);
+        BigInt y(5);
 
-    //     sout << x - y;
+        sout << x + y;
 
-    //     REQUIRE(sout.str() == "0");
-    // }
+        REQUIRE(sout.str() == "0");
+    }
+
+    SUBCASE("-228 + 5")
+    {
+        BigInt x(-228);
+        BigInt y(5);
+
+        sout << x + y;
+
+        REQUIRE(sout.str() == "-223");
+    }
+
+    SUBCASE("5 + (-5)")
+    {
+        BigInt x(5);
+        BigInt y(-5);
+
+        sout << x + y;
+
+        REQUIRE(sout.str() == "0");
+    }
+
+    SUBCASE("5 + (-228)")
+    {
+        BigInt x(5);
+        BigInt y(-228);
+
+        sout << x + y;
+
+        REQUIRE(sout.str() == "-223");
+    }
 }
 
 TEST_CASE("Substraction")
@@ -195,6 +225,31 @@ TEST_CASE("Substraction")
         sout << x - y;
 
         REQUIRE(sout.str() == "-195");
+    }
+
+    SUBCASE("super test")
+    {
+        for (int i = 100; i <= 110; i++) {
+            BigInt a (i);
+            for (int j = -100; j <= 100; j++) {
+                int sum = i - j;
+                cout << i << "-" << j << "\n";//use to see which test it fails
+                stringstream ss;
+                BigInt b (j);
+                ss << a - b;
+                CHECK(ss.str() == to_string(sum));
+            }
+        }
+    }
+
+    SUBCASE("100 - 47")   
+    {
+        BigInt x("100");
+        BigInt y("47");
+
+        sout << x - y;
+
+        REQUIRE(sout.str() == "53");
     }
 }
 
