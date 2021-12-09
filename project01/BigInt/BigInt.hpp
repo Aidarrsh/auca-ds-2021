@@ -69,7 +69,7 @@ public:
 
     static bool bigger(BigInt a, BigInt b)
     {
-        if (equal(a,b))
+        if (equal(a, b))
         {
             return false;
         }
@@ -158,11 +158,11 @@ public:
 
     static bool less(BigInt a, BigInt b)
     {
-        if (equal(a,b))
+        if (equal(a, b))
         {
             return false;
         }
-        else if (bigger(a,b))
+        else if (bigger(a, b))
         {
             return false;
         }
@@ -199,11 +199,11 @@ public:
     }
     static bool equalBigger(BigInt a, BigInt b)
     {
-        if (equal(a,b))
+        if (equal(a, b))
         {
             return true;
         }
-        else if (bigger(a,b))
+        else if (bigger(a, b))
         {
             return true;
         }
@@ -215,11 +215,11 @@ public:
 
     static bool equalLess(BigInt a, BigInt b)
     {
-        if (equal(a,b))
+        if (equal(a, b))
         {
             return true;
         }
-        else if (less(a,b))
+        else if (less(a, b))
         {
             return true;
         }
@@ -231,7 +231,7 @@ public:
 
     static bool notEqual(BigInt a, BigInt b)
     {
-        if (equal(a,b))
+        if (equal(a, b))
         {
             return false;
         }
@@ -249,13 +249,13 @@ public:
         if (a.mIsNegative && !b.mIsNegative)
         {
             a.mIsNegative = false;
-            return sub(b,a);
+            return sub(b, a);
         }
 
         if (!a.mIsNegative && b.mIsNegative)
         {
             b.mIsNegative = false;
-            return sub(a,b);
+            return sub(a, b);
         }
 
         reverse(a.mDigits.begin(), a.mDigits.end());
@@ -291,11 +291,10 @@ public:
         BigInt r;
         r.mDigits.clear();
 
-
         if (a.mIsNegative && !b.mIsNegative)
         {
             a.mIsNegative = false;
-            r = (addValue(a,b));
+            r = (addValue(a, b));
             r.mIsNegative = true;
             return r;
         }
@@ -304,10 +303,10 @@ public:
         {
             r.mIsNegative = false;
             b.mIsNegative = false;
-            return addValue(a,b);
+            return addValue(a, b);
         }
 
-        if (equal(a,b))
+        if (equal(a, b))
         {
             r.mDigits.push_back(0);
             return r;
@@ -320,7 +319,7 @@ public:
             r.mIsNegative = true;
         }
 
-        if (less(a,b))
+        if (less(a, b))
         {
             r.mIsNegative = true;
             std::swap(a, b);
@@ -329,8 +328,8 @@ public:
         reverse(a.mDigits.begin(), a.mDigits.end());
         reverse(b.mDigits.begin(), b.mDigits.end());
 
-        auto it1 = a.mDigits.begin(); //107
-        auto it2 = b.mDigits.begin(); //48
+        auto it1 = a.mDigits.begin(); //106
+        auto it2 = b.mDigits.begin(); //3
         int carry = 0;
         while (it1 != a.mDigits.end() || it2 != b.mDigits.end())
         {
@@ -338,33 +337,44 @@ public:
             carry = 0;
             if (it1 != a.mDigits.end())
             {
-                sum += *it1; // 7
+                sum += *it1; // 0
                 if (*it1 == 0)
                 {
-                    sum += 10; // 9
-                    carry--;   // -1
+                    sum += 10; //
+                    carry--;   //
                 }
                 it1++;
             }
 
             if (it2 != b.mDigits.end())
             {
-                sum -= *it2; // 7 - 8
+                sum -= *it2; // 6 - 3
                 if (sum < 0)
                 {
                     sum += *it2;
                     sum = (sum + 10) - *it2;
                     carry--;
                 }
+                if (*it2 == 0 && sum == 10)
+                {
+                    carry++;
+                }
                 sum = abs(sum);
                 it2++;
             }
+            else
+            {
+                if (sum == 10)
+                {
+                    carry++;
+                }
+            }
             r.mDigits.push_back(sum % 10); //  5
         }
-        if (r.mDigits[r.mDigits.size() - 1] == 0)
-        {
-            r.mDigits.pop_back();
-        }
+        // if (r.mDigits[r.mDigits.size() - 1] == 0)
+        // {
+        //     r.mDigits.pop_back();
+        // }
         reverse(r.mDigits.begin(), r.mDigits.end());
         return r;
     }
@@ -372,7 +382,8 @@ public:
 
 inline std::ostream &operator<<(std::ostream &out, const BigInt &x)
 {
-    if (x.mDigits.empty()){
+    if (x.mDigits.empty())
+    {
         out << 0;
     }
     if (x.mIsNegative)
@@ -384,15 +395,17 @@ inline std::ostream &operator<<(std::ostream &out, const BigInt &x)
 
     for (auto digit : x.mDigits)
     {
-        if (digit != 0){
+        if (digit != 0)
+        {
             cnt++;
         }
-        if (cnt != 0){
+        if (cnt != 0)
+        {
             out << digit;
         }
-        
     }
-    if (cnt == 0){
+    if (cnt == 0)
+    {
         out << 0;
     }
     return out;
@@ -436,4 +449,16 @@ inline BigInt operator+(BigInt a, BigInt b)
 inline BigInt operator-(BigInt a, BigInt b)
 {
     return BigInt::sub(a, b);
+}
+
+inline BigInt operator*(BigInt a, BigInt b)
+{
+    BigInt r;
+    r.mDigits.clear();
+    
+    reverse(a.mDigits.begin(), a.mDigits.end());
+    reverse(b.mDigits.begin(), b.mDigits.end());
+
+    auto it1 = a.mDigits.begin(); //106
+    auto it2 = b.mDigits.begin(); //3
 }

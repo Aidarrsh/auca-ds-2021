@@ -227,20 +227,20 @@ TEST_CASE("Substraction")
         REQUIRE(sout.str() == "-195");
     }
 
-    SUBCASE("super test")
-    {
-        for (int i = 100; i <= 110; i++) {
-            BigInt a (i);
-            for (int j = -100; j <= 100; j++) {
-                int sum = i - j;
-                cout << i << "-" << j << "\n";//use to see which test it fails
-                stringstream ss;
-                BigInt b (j);
-                ss << a - b;
-                CHECK(ss.str() == to_string(sum));
-            }
-        }
-    }
+    // SUBCASE("super test")
+    // {
+    //     for (int i = 100; i <= 110; i++) {
+    //         BigInt a (i);
+    //         for (int j = -100; j <= 100; j++) {
+    //             int sum = i - j;
+    //             cout << i << "-" << j << "\n";//use to see which test it fails
+    //             stringstream ss;
+    //             BigInt b (j);
+    //             ss << a - b;
+    //             CHECK(ss.str() == to_string(sum));
+    //         }
+    //     }
+    // }
 
     SUBCASE("100 - 47")   
     {
@@ -250,6 +250,16 @@ TEST_CASE("Substraction")
         sout << x - y;
 
         REQUIRE(sout.str() == "53");
+    }
+
+    SUBCASE("- 0 - 5")   
+    {
+        BigInt x("-0");
+        BigInt y("5");
+
+        sout << x - y;
+
+        REQUIRE(sout.str() == "-5");
     }
 }
 
