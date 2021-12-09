@@ -15,29 +15,29 @@ int main()
         {
             cin >> v[i];
         }
-        sort(v.begin(), v.end(), [&](int &value1, int &value2)
+        sort(v.begin(), v.end(), [&](int &res, int &res2)
              {
-                 int a = value1 % mod;
-                 int b = value2 % mod;
-                 int absValue1 = abs(value1);
-                 int absValue2 = abs(value2);
+                 int x = res % mod;
+                 int y = res2 % mod;
+                 int abs1 = abs(res);
+                 int abs2 = abs(res2);
 
-                 if (a == b)
+                 if (x == y)
                  {
-                     if (absValue1 % 2 == 1 && absValue2 % 2 == 1)
+                     if (abs1 % 2 == 1 && abs2 % 2 == 1)
                      {
-                         return value1 > value2;
+                         return res > res2;
                      }
-                     if (absValue1 % 2 == 0 && absValue2 % 2 == 0)
+                     if (abs1 % 2 == 0 && abs2 % 2 == 0)
                      {
-                         return value1 < value2;
+                         return res < res2;
                      }
 
-                     return (absValue1 % 2) > (absValue2 % 2);
+                     return (abs1 % 2) > (abs2 % 2);
                  }
                  else
                  {
-                     return a < b;
+                     return x < y;
                  }
              });
 
