@@ -456,9 +456,26 @@ inline BigInt operator*(BigInt a, BigInt b)
     BigInt r;
     r.mDigits.clear();
     
-    reverse(a.mDigits.begin(), a.mDigits.end());
-    reverse(b.mDigits.begin(), b.mDigits.end());
+    reverse(a.mDigits.begin(), a.mDigits.end()); // 25
+    reverse(b.mDigits.begin(), b.mDigits.end()); // 25
 
-    auto it1 = a.mDigits.begin(); //106
-    auto it2 = b.mDigits.begin(); //3
+    if (a < b){
+        std::swap(a,b);
+    }
+
+    int carry = 0;
+    for (auto it1 = a.mDigits.begin(); it1 != a.mDigits.end(); it1++){
+        for (auto it2 = b.mDigits.begin(); it2 != b.mDigits.end(); it2 ++){
+            int sum = carry;
+            carry = 0;
+            sum = sum + (*it1 * *it2);
+            carry = sum/10;
+            r.mDigits.push_back(sum%10);
+        }
+    }
+    if (carry != 0){
+        r.mDigits.push_back(carry);
+    }
+    reverse(r.mDigits.begin(), r.mDigits.end());
+    return r;
 }

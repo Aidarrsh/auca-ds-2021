@@ -263,6 +263,47 @@ TEST_CASE("Substraction")
     }
 }
 
+TEST_CASE("MULTIPLICATION")
+{
+    ostringstream sout;
+
+    SUBCASE("25 * 5"){
+        BigInt x("25");
+        BigInt y("5");
+
+        sout << x * y;
+
+        REQUIRE(sout.str() == "125");
+    }
+
+    SUBCASE("25 * 25"){
+        BigInt x("25");
+        BigInt y("25");
+
+        sout << x * y;
+
+        REQUIRE(sout.str() == "625");
+    }
+
+    SUBCASE("15 * 5"){
+        BigInt x("15");
+        BigInt y("5");
+
+        sout << x * y;
+
+        REQUIRE(sout.str() == "75");
+    }
+
+    SUBCASE("5 * 15"){
+        BigInt x("5");
+        BigInt y("15");
+
+        sout << x * y;
+
+        REQUIRE(sout.str() == "75");
+    }
+}
+
 TEST_CASE("COMPARE")
 {
     ostringstream sout;
