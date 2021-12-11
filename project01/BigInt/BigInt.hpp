@@ -371,10 +371,6 @@ public:
             }
             r.mDigits.push_back(sum % 10); //  5
         }
-        // if (r.mDigits[r.mDigits.size() - 1] == 0)
-        // {
-        //     r.mDigits.pop_back();
-        // }
         reverse(r.mDigits.begin(), r.mDigits.end());
         return r;
     }
@@ -455,27 +451,114 @@ inline BigInt operator*(BigInt a, BigInt b)
 {
     BigInt r;
     r.mDigits.clear();
-    
-    reverse(a.mDigits.begin(), a.mDigits.end()); // 25
-    reverse(b.mDigits.begin(), b.mDigits.end()); // 25
-
-    if (a < b){
-        std::swap(a,b);
+    if (a.mIsNegative != b.mIsNegative)
+    {
+        r.mIsNegative = true;
     }
 
-    int carry = 0;
-    for (auto it1 = a.mDigits.begin(); it1 != a.mDigits.end(); it1++){
-        for (auto it2 = b.mDigits.begin(); it2 != b.mDigits.end(); it2 ++){
+    if (a == 0 || b == 0)
+    {
+        return 0;
+    }
+
+    auto it2 = b.mDigits.rbegin();
+    a.mIsNegative = false, b.mIsNegative = false;
+    int shift = 0;
+    while (it2 != b.mDigits.rend())
+    {
+        auto it1 = a.mDigits.rbegin();
+        int carry = 0;
+        int currShift = shift;
+        while (it1 != a.mDigits.rend() || carry != 0)
+        {
             int sum = carry;
-            carry = 0;
-            sum = sum + (*it1 * *it2);
-            carry = sum/10;
-            r.mDigits.push_back(sum%10);
+            if (it1 != a.mDigits.rend())
+            {
+                sum = *it1 * (*it2) + sum;
+                it1++;
+            }
+            if (currShift < (int)r.mDigits.size())
+            {
+                carry = (r.mDigits[currShift] + sum) / 10;
+                r.mDigits[currShift] = (r.mDigits[currShift] + sum) % 10;
+            }
+            else
+            {
+                r.mDigits.push_back(sum % 10);
+                carry = sum / 10;
+            }
+            currShift++;
         }
-    }
-    if (carry != 0){
-        r.mDigits.push_back(carry);
+        shift++;
+        it2++;
     }
     reverse(r.mDigits.begin(), r.mDigits.end());
     return r;
 }
+
+inline BigInt operator/(BigInt a, BigInt b)
+{
+    BigInt r;
+
+    r.mDigits.clear();
+
+    if (b == 0)
+    {
+        std::runtime_error("Divisor can't be zero");
+    }
+
+    auto it1 = a.mDigits.begin();
+    auto it2 = b.mDigits.begin();
+
+    BigInt temp;
+    temp.mDigits.clear();
+    int res = 0;
+    while (it1 != a.mDigits.end())
+    {
+        while (temp < b)
+        {
+            temp.mDigits.push_back(*it1);
+            it1++;
+        }
+        while (temp >= b)
+        {
+            std::stringstream ss;
+            ss << temp - b;
+            temp = BigInt(ss.str());
+            res++;
+        }
+        r.mDigits.push_back(res);
+        res = 0;
+    }
+
+    return r;
+}
+
+// int i = 0;
+// while (i < (int)a.mDigits.size())
+// {
+//     if (temp < b)
+//     {
+//         if (temp == BigInt())
+//         {
+//             temp.mDigits.clear();
+//         }
+//         temp.mDigits.push_back(a.mDigits[i++]);
+//         while (temp < b && i < (int)a.mDigits.size())
+//         {
+//             if (temp == BigInt())
+//             {
+//                 temp.mDigits.clear();
+//             }
+//             temp.mDigits.push_back(a.mDigits[i++]);
+//             r.mDigits.push_back(0);
+//         }
+//     }
+//     res = 0;
+//     while (temp >= b)
+//     {
+//         temp = temp - b;
+//         res++;
+//     }
+//     r.mDigits.push_back(res);
+// }

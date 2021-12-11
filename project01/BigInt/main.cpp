@@ -46,7 +46,7 @@ TEST_CASE("String constructor")
     SUBCASE("Test with 228")
     {
         BigInt a("228");
-        
+
         sout << a;
 
         REQUIRE(sout.str() == "228");
@@ -89,8 +89,6 @@ TEST_CASE("Addition")
         sout << x + y;
 
         REQUIRE(sout.str() == "123457017");
-
-
     }
 
     SUBCASE("-5 + 5")
@@ -207,7 +205,7 @@ TEST_CASE("Substraction")
         REQUIRE(sout.str() == "-10");
     }
 
-    SUBCASE("-200 - (-5)")  // 5-200     
+    SUBCASE("-200 - (-5)") // 5-200
     {
         BigInt x(-200);
         BigInt y(-5);
@@ -217,7 +215,7 @@ TEST_CASE("Substraction")
         REQUIRE(sout.str() == "-195");
     }
 
-    SUBCASE("5 - 200")  // 5-200     
+    SUBCASE("5 - 200") // 5-200
     {
         BigInt x(5);
         BigInt y(200);
@@ -242,7 +240,7 @@ TEST_CASE("Substraction")
     //     }
     // }
 
-    SUBCASE("100 - 47")   
+    SUBCASE("100 - 47")
     {
         BigInt x("100");
         BigInt y("47");
@@ -252,14 +250,14 @@ TEST_CASE("Substraction")
         REQUIRE(sout.str() == "53");
     }
 
-    SUBCASE("- 0 - 5")   
+    SUBCASE("0 - 7")
     {
-        BigInt x("-0");
-        BigInt y("5");
+        BigInt x("0");
+        BigInt y("7");
 
         sout << x - y;
 
-        REQUIRE(sout.str() == "-5");
+        REQUIRE(sout.str() == "-7");
     }
 }
 
@@ -267,7 +265,8 @@ TEST_CASE("MULTIPLICATION")
 {
     ostringstream sout;
 
-    SUBCASE("25 * 5"){
+    SUBCASE("25 * 5")
+    {
         BigInt x("25");
         BigInt y("5");
 
@@ -276,7 +275,8 @@ TEST_CASE("MULTIPLICATION")
         REQUIRE(sout.str() == "125");
     }
 
-    SUBCASE("25 * 25"){
+    SUBCASE("25 * 25")
+    {
         BigInt x("25");
         BigInt y("25");
 
@@ -285,7 +285,8 @@ TEST_CASE("MULTIPLICATION")
         REQUIRE(sout.str() == "625");
     }
 
-    SUBCASE("15 * 5"){
+    SUBCASE("15 * 5")
+    {
         BigInt x("15");
         BigInt y("5");
 
@@ -294,7 +295,8 @@ TEST_CASE("MULTIPLICATION")
         REQUIRE(sout.str() == "75");
     }
 
-    SUBCASE("5 * 15"){
+    SUBCASE("5 * 15")
+    {
         BigInt x("5");
         BigInt y("15");
 
@@ -302,12 +304,74 @@ TEST_CASE("MULTIPLICATION")
 
         REQUIRE(sout.str() == "75");
     }
+
+    SUBCASE("0 * 100")
+    {
+        BigInt x("0");
+        BigInt y("100");
+
+        sout << x * y;
+
+        REQUIRE(sout.str() == "0");
+    }
+
+    // SUBCASE("Super Test")
+    // {
+    //     for (int i = -50; i <= 50; i++)
+    //     {
+    //         BigInt a(i);
+    //         for (int j = 1; j <= 50 && j != 0; j++)
+    //         {
+    //             int sum = i * j;
+    //             cout << i << "*" << j << "\n"; 
+    //             stringstream ss;
+    //             BigInt b(j);
+    //             ss << a * b;
+    //             CHECK(ss.str() == to_string(sum));
+    //         }
+    //     }
+    // }
+}
+
+TEST_CASE("DIVISION")
+{
+    ostringstream sout;
+
+    SUBCASE("9 / 3")
+    {
+        BigInt x("9");
+        BigInt y("3");
+
+        sout << x / y;
+
+        REQUIRE(sout.str() == "3");
+    }
+
+    SUBCASE("125 / 5")
+    {
+        BigInt x("125");
+        BigInt y("5");
+
+        sout << x / y;
+
+        REQUIRE(sout.str() == "25");
+    }
+
+    SUBCASE("63 / 7")
+    {
+        BigInt x("63");
+        BigInt y("7");
+
+        sout << x / y;
+
+        REQUIRE(sout.str() == "9");
+    }
 }
 
 TEST_CASE("COMPARE")
 {
     ostringstream sout;
-    
+
     SUBCASE("2021 == 2021")
     {
         BigInt x("2021");
