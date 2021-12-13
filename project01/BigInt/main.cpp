@@ -366,6 +366,83 @@ TEST_CASE("DIVISION")
 
         REQUIRE(sout.str() == "9");
     }
+
+    SUBCASE("1010 / 10")
+    {
+        BigInt x("1010");
+        BigInt y("10");
+
+        sout << x / y;
+
+        REQUIRE(sout.str() == "101");
+    }
+
+    SUBCASE("1204 / 2")
+    {
+        BigInt x("1204");
+        BigInt y("2");
+
+        sout << x / y;
+
+        REQUIRE(sout.str() == "602");
+    }
+
+    SUBCASE("-1204 / 2")
+    {
+        BigInt x("-1204");
+        BigInt y("2");
+
+        sout << x / y;
+
+        REQUIRE(sout.str() == "-602");
+    }
+
+    SUBCASE("1204 / -2")
+    {
+        BigInt x("1204");
+        BigInt y("-2");
+
+        sout << x / y;
+
+        REQUIRE(sout.str() == "-602");
+    }
+
+    SUBCASE("-1204 / -2")
+    {
+        BigInt x("-1204");
+        BigInt y("-2");
+
+        sout << x / y;
+
+        REQUIRE(sout.str() == "602");
+    }
+
+    SUBCASE("100 / 2")
+    {
+        BigInt x("100");
+        BigInt y("2");
+
+        sout << x / y;
+
+        REQUIRE(sout.str() == "50");
+    }
+
+    SUBCASE("Super Test")
+    {
+        for (int i = 1000; i <= 1100; i++)
+        {
+            BigInt a(i);
+            for (int j = -1000; j <= 1000 && j != 0; j++)
+            {
+                int sum = i / j;
+                cout << i << "/" << j << "\n"; 
+                stringstream ss;
+                BigInt b(j);
+                ss << a / b;
+                CHECK(ss.str() == to_string(sum));
+            }
+        }
+    }
 }
 
 TEST_CASE("COMPARE")

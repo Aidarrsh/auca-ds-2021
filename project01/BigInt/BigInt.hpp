@@ -176,14 +176,14 @@ public:
     {
         if (a.mDigits.size() == b.mDigits.size() && a.mIsNegative == b.mIsNegative)
         {
-            auto ita = a.mDigits.begin();
-            auto itb = b.mDigits.begin();
-            while (ita != a.mDigits.end())
+            auto it1 = a.mDigits.begin();
+            auto it2 = b.mDigits.begin();
+            while (it1 != a.mDigits.end())
             {
-                if (*ita == *itb)
+                if (*it1 == *it2)
                 {
-                    ita++;
-                    itb++;
+                    it1++;
+                    it2++;
                 }
                 else
                 {
@@ -381,6 +381,7 @@ inline std::ostream &operator<<(std::ostream &out, const BigInt &x)
     if (x.mDigits.empty())
     {
         out << 0;
+        return out;
     }
     if (x.mIsNegative)
     {
@@ -502,24 +503,63 @@ inline BigInt operator/(BigInt a, BigInt b)
 
     r.mDigits.clear();
 
+    if (a == BigInt())
+    {
+        return 0;
+    }
+
     if (b == 0)
     {
         std::runtime_error("Divisor can't be zero");
     }
 
+    if ((a.mIsNegative && !b.mIsNegative))
+    {
+        r.mIsNegative = true;
+        a.mIsNegative = false;
+        if (a < b)
+        {
+            return 0;
+        }
+    }
+
+    if (!a.mIsNegative && b.mIsNegative)
+    {
+        r.mIsNegative = true;
+        b.mIsNegative = false;
+    }
+
+    if (a.mIsNegative && b.mIsNegative)
+    {
+        r.mIsNegative = false;
+        a.mIsNegative = false;
+        b.mIsNegative = false;
+    }
+
     auto it1 = a.mDigits.begin();
-    auto it2 = b.mDigits.begin();
 
     BigInt temp;
     temp.mDigits.clear();
     int res = 0;
-    while (it1 != a.mDigits.end())
+
+    if (a.mDigits.size() > b.mDigits.size())
     {
-        while (temp < b)
+        temp.mDigits.push_back(*it1);
+        it1++;
+    }
+    while (it1 != a.mDigits.end()) // 1204 / 2
+    {
+        if (temp == BigInt())
         {
-            temp.mDigits.push_back(*it1);
-            it1++;
+            temp.mDigits.clear();
         }
+        temp.mDigits.push_back(*it1);
+
+        if (temp == 0)
+        {
+            res = 0;
+        }
+
         while (temp >= b)
         {
             std::stringstream ss;
@@ -527,38 +567,11 @@ inline BigInt operator/(BigInt a, BigInt b)
             temp = BigInt(ss.str());
             res++;
         }
+
         r.mDigits.push_back(res);
         res = 0;
+        it1++;
     }
 
     return r;
 }
-
-// int i = 0;
-// while (i < (int)a.mDigits.size())
-// {
-//     if (temp < b)
-//     {
-//         if (temp == BigInt())
-//         {
-//             temp.mDigits.clear();
-//         }
-//         temp.mDigits.push_back(a.mDigits[i++]);
-//         while (temp < b && i < (int)a.mDigits.size())
-//         {
-//             if (temp == BigInt())
-//             {
-//                 temp.mDigits.clear();
-//             }
-//             temp.mDigits.push_back(a.mDigits[i++]);
-//             r.mDigits.push_back(0);
-//         }
-//     }
-//     res = 0;
-//     while (temp >= b)
-//     {
-//         temp = temp - b;
-//         res++;
-//     }
-//     r.mDigits.push_back(res);
-// }
