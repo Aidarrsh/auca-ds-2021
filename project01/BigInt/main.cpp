@@ -427,22 +427,22 @@ TEST_CASE("DIVISION")
         REQUIRE(sout.str() == "50");
     }
 
-    SUBCASE("Super Test")
-    {
-        for (int i = 1000; i <= 1100; i++)
-        {
-            BigInt a(i);
-            for (int j = -1000; j <= 1000 && j != 0; j++)
-            {
-                int sum = i / j;
-                cout << i << "/" << j << "\n"; 
-                stringstream ss;
-                BigInt b(j);
-                ss << a / b;
-                CHECK(ss.str() == to_string(sum));
-            }
-        }
-    }
+    // SUBCASE("Super Test")
+    // {
+    //     for (int i = 1000; i <= 1100; i++)
+    //     {
+    //         BigInt a(i);
+    //         for (int j = -1000; j <= 1000 && j != 0; j++)
+    //         {
+    //             int sum = i / j;
+    //             cout << i << "/" << j << "\n"; 
+    //             stringstream ss;
+    //             BigInt b(j);
+    //             ss << a / b;
+    //             CHECK(ss.str() == to_string(sum));
+    //         }
+    //     }
+    // }
 }
 
 TEST_CASE("COMPARE")
@@ -511,5 +511,87 @@ TEST_CASE("COMPARE")
         BigInt y(2077);
 
         REQUIRE(x != y);
+    }
+}
+
+TEST_CASE("MOD")
+{
+    ostringstream sout;
+
+    // SUBCASE("5 % 2")
+    // {
+    //     BigInt x("5");
+    //     BigInt y("2");
+
+    //     sout << x % y;
+
+    //     REQUIRE(sout.str() == "1");
+    // }
+
+    // SUBCASE("239 % 16")
+    // {
+    //     BigInt x("239");
+    //     BigInt y("16");
+
+    //     sout <<x % y;
+
+    //     REQUIRE(sout.str() == "15");
+    // }
+
+    // SUBCASE("-239 % 16")
+    // {
+    //     BigInt x("-239");
+    //     BigInt y("16");
+
+    //     sout <<x % y;
+
+    //     REQUIRE(sout.str() == "-15");
+    // }
+
+    // SUBCASE("239 % (-16)")
+    // {
+    //     BigInt x("239");
+    //     BigInt y("-16");
+
+    //     sout <<x % y;
+
+    //     REQUIRE(sout.str() == "15");
+    // }
+
+    // SUBCASE("4638746747645731289347483927 % 6784789")
+    // {
+    //     BigInt x("4638746747645731289347483927");
+    //     BigInt y("6784789");
+
+    //     sout <<x % y;
+
+    //     REQUIRE(sout.str() == "1001783");
+    // }
+
+    // SUBCASE("1100 % 11")
+    // {
+    //     BigInt x("1100");
+    //     BigInt y("11");
+
+    //     sout <<x % y;
+
+    //     REQUIRE(sout.str() == "0");
+    // }
+
+    SUBCASE("Super Test")
+    {
+        for (int i = 1000; i <= 1100; i++)
+        {
+            BigInt a(i);
+            for (int j = -1000; j <= 1000 && j != 0; j++)
+            {
+                int sum = i % j;
+                cout << i << "%" << j << "\n"; 
+                stringstream ss;
+                BigInt b(j);
+                ss << a % b;
+                CHECK(ss.str() == to_string(sum));
+            }
+        }
     }
 }

@@ -542,11 +542,11 @@ inline BigInt operator/(BigInt a, BigInt b)
     temp.mDigits.clear();
     int res = 0;
 
-    if (a.mDigits.size() > b.mDigits.size())
-    {
-        temp.mDigits.push_back(*it1);
-        it1++;
-    }
+    // if (a.mDigits.size() > b.mDigits.size())
+    // {
+    //     temp.mDigits.push_back(*it1);
+    //     it1++;
+    // }
     while (it1 != a.mDigits.end()) // 1204 / 2
     {
         if (temp == BigInt())
@@ -573,5 +573,55 @@ inline BigInt operator/(BigInt a, BigInt b)
         it1++;
     }
 
+    return r;
+}
+
+inline BigInt operator%(BigInt a, BigInt b){
+    BigInt r;
+    bool minus = false;
+
+    r.mDigits.clear();
+
+    if (a.mIsNegative)
+    {
+        minus = true;
+        a.mIsNegative = false;
+        if (a < b)
+        {
+            return 0;
+        }
+    }
+
+    if (!a.mIsNegative && b.mIsNegative)
+    {
+        minus = false;
+        b.mIsNegative = false;
+    }
+
+    if (a.mIsNegative && b.mIsNegative)
+    {
+        minus = true;
+        a.mIsNegative = false;
+        b.mIsNegative = false;
+    }
+
+    auto it1 = a.mDigits.begin();
+    while (it1 != a.mDigits.end()) // 1204 / 2
+    {
+        if (r == BigInt())
+        {
+            r.mDigits.clear();
+        }
+        r.mDigits.push_back(*it1);
+
+        while (r >= b)
+        {
+            std::stringstream ss;
+            ss << r - b;
+            r = BigInt(ss.str());
+        }
+        it1++;
+    }
+    r.mIsNegative = minus;
     return r;
 }
