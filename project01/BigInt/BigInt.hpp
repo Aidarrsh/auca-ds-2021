@@ -408,6 +408,20 @@ inline std::ostream &operator<<(std::ostream &out, const BigInt &x)
     return out;
 }
 
+inline std::istream &operator>>(std::istream &inp, BigInt &x)
+{
+    std::string s;
+
+    if (!(inp >> s))
+    {
+        return inp;
+    }
+
+    x = BigInt(s);
+
+    return inp;
+}
+
 inline bool operator==(BigInt a, BigInt b)
 {
     return BigInt::equal(a, b);
@@ -624,4 +638,68 @@ inline BigInt operator%(BigInt a, BigInt b){
     }
     r.mIsNegative = minus;
     return r;
+}
+
+inline BigInt abs (BigInt r)
+{
+    r.mIsNegative = false;
+    return r;
+}
+
+inline BigInt operator++(BigInt &r)
+{
+    r = r + (BigInt) 1;
+
+    return r;
+}
+
+inline BigInt operator++(BigInt &r, int)
+{
+    BigInt temp;
+    ++r;
+    return temp;
+}
+
+inline BigInt operator--(BigInt &r)
+{
+    r = r - (BigInt) 1;
+
+    return r;
+}
+
+inline BigInt operator--(BigInt &r, int)
+{
+    BigInt temp;
+    --r;
+    return temp;
+}
+
+inline BigInt operator+=(BigInt &a, BigInt &b)
+{
+    a = a + b;
+    return a;
+}
+
+inline BigInt operator-=(BigInt &a, BigInt &b)
+{
+    a = a - b;
+    return a;
+}
+
+inline BigInt operator*=(BigInt &a, BigInt &b)
+{
+    a = a * b;
+    return a;
+}
+
+inline BigInt operator/=(BigInt &a, BigInt &b)
+{
+    a = a / b;
+    return a;
+}
+
+inline BigInt operator%=(BigInt &a, BigInt &b)
+{
+    a = a % b;
+    return a;
 }
