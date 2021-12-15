@@ -54,7 +54,6 @@ int main()
 
         stable_sort(v.begin(), v.end(), [](const f &a, const f &b)
                     { return a.nInversions < b.nInversions; });
-
         for (int j = 0; j < sz(v); j++)
         {
             cout << v[j].DNA << "\n";

@@ -417,15 +417,15 @@ TEST_CASE("DIVISION")
         REQUIRE(sout.str() == "602");
     }
 
-    SUBCASE("100 / 2")
-    {
-        BigInt x("100");
-        BigInt y("2");
+    // SUBCASE("100 / 0")
+    // {
+    //     BigInt x("100");
+    //     BigInt y("0");
 
-        sout << x / y;
+    //     sout << x / y;
 
-        REQUIRE(sout.str() == "50");
-    }
+    //     REQUIRE(sout.str() == "50");
+    // }
 
     // SUBCASE("Super Test")
     // {

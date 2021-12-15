@@ -522,8 +522,9 @@ inline BigInt operator/(BigInt a, BigInt b)
         return 0;
     }
 
-    if (b == 0)
+    if (b == BigInt())
     {
+        throw
         std::runtime_error("Divisor can't be zero");
     }
 
