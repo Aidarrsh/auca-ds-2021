@@ -22,29 +22,29 @@ public:
     BigInt()
         : mIsNegative(false)
     {
-        mDigits.push_back(0);
+    //    mDigits.push_back(0);
     }
 
-    BigInt(int n)
+    BigInt(int n):BigInt(to_string(n))
     {
-        if (n < 0)
-        {
-            mIsNegative = true;
-            n = -n;
-        }
-        else
-        {
-            mIsNegative = false;
-        }
+        // if (n < 0)
+        // {
+        //     mIsNegative = true;
+        //     n = -n;
+        // }
+        // else
+        // {
+        //     mIsNegative = false;
+        // }
 
-        while (n)
-        {
-            int temp = n % 10;
-            mDigits.push_back(temp);
-            n /= 10;
-        }
+        // while (n)
+        // {
+        //     int temp = n % 10;
+        //     mDigits.push_back(temp);
+        //     n /= 10;
+        // }
 
-        reverse(mDigits.begin(), mDigits.end());
+        // reverse(mDigits.begin(), mDigits.end());
     }
 
     BigInt(std::string str)
@@ -102,7 +102,7 @@ public:
                     }
                     else
                     {
-                        while (it1 != a.mDigits.end())
+                        while (it1 != a.mDigits.end()) //// 2225   2334
                         {
                             if (*it1 < *it2)
                             {
@@ -471,10 +471,10 @@ inline BigInt operator*(BigInt a, BigInt b)
         r.mIsNegative = true;
     }
 
-    if (a == 0 || b == 0)
-    {
-        return 0;
-    }
+    // if (a == 0 || b == 0)
+    // {
+    //     return 0;
+    // }
 
     auto it2 = b.mDigits.rbegin();
     a.mIsNegative = false, b.mIsNegative = false;
@@ -562,9 +562,13 @@ inline BigInt operator/(BigInt a, BigInt b)
     //     temp.mDigits.push_back(*it1);
     //     it1++;
     // }
+
+    BigInt zero;
+    zero.mDigits.push_back(0);
+
     while (it1 != a.mDigits.end()) // 1204 / 2
     {
-        if (temp == BigInt())
+        if (temp == zero)
         {
             temp.mDigits.clear();
         }
@@ -620,10 +624,14 @@ inline BigInt operator%(BigInt a, BigInt b){
         b.mIsNegative = false;
     }
 
+    BigInt zero;
+
+    zero.mDigits.push_back(0);
+
     auto it1 = a.mDigits.begin();
     while (it1 != a.mDigits.end()) // 1204 / 2
     {
-        if (r == BigInt())
+        if (r == zero)
         {
             r.mDigits.clear();
         }
@@ -632,7 +640,7 @@ inline BigInt operator%(BigInt a, BigInt b){
         while (r >= b)
         {
             std::stringstream ss;
-            ss << r - b;
+            ss << r - b; // 1001 % 10
             r = BigInt(ss.str());
         }
         it1++;

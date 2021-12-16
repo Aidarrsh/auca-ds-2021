@@ -578,22 +578,22 @@ TEST_CASE("MOD")
         REQUIRE(sout.str() == "0");
     }
 
-    // SUBCASE("Super Test")
-    // {
-    //     for (int i = 1000; i <= 1100; i++)
-    //     {
-    //         BigInt a(i);
-    //         for (int j = -1000; j <= 1000 && j != 0; j++)
-    //         {
-    //             int sum = i % j;
-    //             cout << i << "%" << j << "\n"; 
-    //             stringstream ss;
-    //             BigInt b(j);
-    //             ss << a % b;
-    //             CHECK(ss.str() == to_string(sum));
-    //         }
-    //     }
-    // }
+    SUBCASE("Super Test")
+    {
+        for (int i = 1000; i <= 1100; i++)
+        {
+            BigInt a(i);
+            for (int j = -1000; j <= 1000 && j != 0; j++)
+            {
+                int sum = i % j;
+                cout << i << "%" << j << "\n"; 
+                stringstream ss;
+                BigInt b(j);
+                ss << a % b;
+                CHECK(ss.str() == to_string(sum));
+            }
+        }
+    }
 }
 
 TEST_CASE("Unary and Binary")
