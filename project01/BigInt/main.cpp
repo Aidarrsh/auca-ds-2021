@@ -578,22 +578,22 @@ TEST_CASE("MOD")
         REQUIRE(sout.str() == "0");
     }
 
-    SUBCASE("Super Test")
-    {
-        for (int i = 1000; i <= 1100; i++)
-        {
-            BigInt a(i);
-            for (int j = -1000; j <= 1000 && j != 0; j++)
-            {
-                int sum = i % j;
-                cout << i << "%" << j << "\n"; 
-                stringstream ss;
-                BigInt b(j);
-                ss << a % b;
-                CHECK(ss.str() == to_string(sum));
-            }
-        }
-    }
+    // SUBCASE("Super Test")
+    // {
+    //     for (int i = 1000; i <= 1100; i++)
+    //     {
+    //         BigInt a(i);
+    //         for (int j = -1000; j <= 1000 && j != 0; j++)
+    //         {
+    //             int sum = i % j;
+    //             cout << i << "%" << j << "\n"; 
+    //             stringstream ss;
+    //             BigInt b(j);
+    //             ss << a % b;
+    //             CHECK(ss.str() == to_string(sum));
+    //         }
+    //     }
+    // }
 }
 
 TEST_CASE("Unary and Binary")
@@ -700,4 +700,120 @@ TEST_CASE("abs")
     sout <<abs(x);
 
     REQUIRE(sout.str() == "100");
+}
+
+TEST_CASE("operator>>")
+{
+    SUBCASE("130")
+    {
+        istringstream sinp("130");
+        BigInt x;
+        sinp >> x;
+        REQUIRE(x == 130);
+
+        bool state = static_cast<bool>(sinp); // (bool) sinp
+        REQUIRE(state);
+    }
+    SUBCASE("-130")
+    {
+        istringstream sinp("-130");
+        BigInt x;
+        sinp >> x;
+        REQUIRE(x == -130);
+
+        bool state = static_cast<bool>(sinp); // (bool) sinp
+        REQUIRE(state);
+    }
+    SUBCASE("   -130")
+    {
+        istringstream sinp("   -130");
+        BigInt x;
+        sinp >> x;
+        REQUIRE(x == -130);
+
+        bool state = static_cast<bool>(sinp); // (bool) sinp
+        REQUIRE(state);
+    }
+    // SUBCASE("-")
+    // {
+    //     istringstream sinp("-");
+    //     BigInt x;
+    //     sinp >> x;
+    //     bool state = static_cast<bool>(sinp); // (bool) sinp
+    //     REQUIRE_FALSE(state);
+    // }
+
+    SUBCASE("- 125")
+    {
+        istringstream sinp("- 125");
+        BigInt x;
+        sinp >> x;
+        bool state = static_cast<bool>(sinp); // (bool) sinp
+        REQUIRE_FALSE(state);
+    }
+    // SUBCASE("   X")
+    // {
+    //     istringstream sinp("   X");
+    //     BigInt x;
+    //     sinp >> x;
+    //     bool state = static_cast<bool>(sinp); // (bool) sinp
+    //     REQUIRE_FALSE(state);
+    //     sinp.clear();
+    //     char ch;
+    //     sinp >> ch;
+    //     REQUIRE(ch == 'X');
+    //     }
+    SUBCASE("      x")
+    {
+        istringstream sinp("       x");
+        BigInt x;
+        sinp >> x;
+
+        bool state = static_cast<bool>(sinp);
+        REQUIRE_FALSE(state);
+        sinp.clear();
+        char ch;
+        sinp >> ch;
+        REQUIRE(ch == 'x');
+    }
+    // SUBCASE("-")
+    // {
+    //     istringstream sinp("-");
+    //     BigInt x;
+    //     sinp >> x;
+    //     bool state = static_cast<bool>(sinp); // (bool) sinp
+    //     REQUIRE_FALSE(state);
+    // }
+    SUBCASE("   ")
+    {
+        istringstream sinp("   ");
+        BigInt x;
+        sinp >> x;
+        bool state = static_cast<bool>(sinp); // (bool) sinp
+        REQUIRE_FALSE(state);
+    }
+
+    SUBCASE("130+123")
+    {
+        istringstream sinp("130+123");
+        BigInt x;
+        sinp >> x;
+        REQUIRE(x == 130);
+        string rest;
+        getline(sinp, rest);
+        bool state = static_cast<bool>(sinp); // (bool) sinp
+        REQUIRE(state);
+        REQUIRE(rest == "+123");
+    }
+    // SUBCASE("1 + 2 + 3 + 4 + 5")
+    // {
+    //     istringstream sinp("1 2 3 4 5");
+    //     BigInt s = 0;
+    //     for (BigInt x; sinp >> x;)
+    //     {
+    //         s.operator+=(x);
+    //     }
+    //     REQUIRE(s == 15);
+    //     REQUIRE(sinp.eof());
+    // }
 }
