@@ -14,37 +14,44 @@ int main()
     int maxLenght = 0;
     while (getline(cin, s))
     {
-        v.push_back(s);
         if (s == "")
         {
-            
+
             sort(begin(v), end(v), [](string a, string b)
-                 { 
+                 {
                      reverse(begin(a), end(a));
                      reverse(begin(b), end(b));
-                     return a < b; });
+                     return a < b;
+                 });
 
             for (auto i : v)
             {
                 cout.width(maxLenght);
                 cout << i << "\n";
             }
+            v.clear();
+            maxLenght = 0;
+            cout <<"\n";
         }
-        else {
-            if (s.length() > maxLenght){
+        else
+        {
+            if (s.length() > maxLenght)
+            {
                 maxLenght = s.length();
             }
+            v.push_back(s);
         }
     }
     sort(begin(v), end(v), [](string a, string b)
-                 { 
-                     reverse(begin(a), end(a));
-                     reverse(begin(b), end(b));
-                     return a < b; });
+         {
+             reverse(begin(a), end(a));
+             reverse(begin(b), end(b));
+             return a < b;
+         });
 
-            for (auto i : v)
-            {
-                cout.width(maxLenght);
-                cout << i << "\n";
-            }
+    for (auto i : v)
+    {
+        cout.width(maxLenght);
+        cout << i << "\n";
+    }
 }
