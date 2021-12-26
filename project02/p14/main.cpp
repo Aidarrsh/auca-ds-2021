@@ -10,9 +10,14 @@ int main()
     iostream::sync_with_stdio(false);
     int n;
     vector<string> v;
+    bool first = false;
     while (n != 0)
     {
         cin >> n;
+        if (first && n != 0)
+        {
+            cout << "\n";
+        }
         for (int i = 0; i < n; i++)
         {
             string s;
@@ -25,7 +30,7 @@ int main()
                         {
                             return a < b;
                         }
-                        else 
+                        else
                         {
                             return a[1] < b[1];
                         }
@@ -36,6 +41,7 @@ int main()
             cout << v[i] << "\n";
         }
         v.clear();
-        cout <<"\n";
+        first = true;
+        // cout <<"\n";
     }
 }
