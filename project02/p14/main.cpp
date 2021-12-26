@@ -10,25 +10,21 @@ int main()
     iostream::sync_with_stdio(false);
     int n;
     vector<string> v;
-    bool first = false;
-    while (n != 0)
+    // bool first = false;
+    while (cin >> n)
     {
-        cin >> n;
-        if (first && n != 0)
-        {
-            cout << "\n";
-        }
+        
         for (int i = 0; i < n; i++)
         {
             string s;
             cin >> s;
-            v.emplace_back(s);
+            v.push_back(s);
         }
         stable_sort(begin(v), end(v), [](string a, string b)
                     {
                         if (a[0] != b[0])
                         {
-                            return a < b;
+                            return a[0] < b[0];
                         }
                         else
                         {
@@ -41,7 +37,10 @@ int main()
             cout << v[i] << "\n";
         }
         v.clear();
-        first = true;
-        // cout <<"\n";
+        // first = true;
+        // if (first && n != 0)
+        // {
+        //     cout << "\n";
+        // }
     }
 }
