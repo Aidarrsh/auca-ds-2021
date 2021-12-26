@@ -155,7 +155,7 @@ struct GreaterThan
         : mData(data)
     {
     }
-    bool opearator(int value) const
+    bool operator()(int value) const
     {
         return value > mData;
     }
@@ -391,7 +391,7 @@ void p08()
 
 void p09()
 {
-    using Employee = tuple<string, int, double>;
+    using Employee = tuple<string, int, double>; //
 
     string name;
     double salary;
