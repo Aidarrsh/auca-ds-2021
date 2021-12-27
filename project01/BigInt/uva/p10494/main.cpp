@@ -716,20 +716,17 @@ inline BigInt operator%=(BigInt &a, BigInt &b)
 int main()
 {
     iostream::sync_with_stdio(false);
-    int n , a;
-    while(cin >> a >> n)
+
+    BigInt x, y;
+    char ch;
+    while (cin >> x >> ch >> y)
     {
-        BigInt x (n);
-        BigInt res (0);
-        for (int i = 1; i <= a; i++)
+        BigInt res;
+        if (ch == '/')
         {
-            BigInt temp(i);
-            BigInt temp1(n);
-            for (int j = 1; j < i; j++)
-            {
-                temp1 *= x;
-            }
-            res = res + (temp * temp1);
+            res = x / y;
+        } else {
+            res = x % y;
         }
         cout << res << endl;
     }
