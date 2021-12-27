@@ -1,6 +1,9 @@
 #include <bits/stdc++.h>
 
 using namespace std;
+template <typename C>
+int sz(const C &c) { return static_cast<int>(c.size()); }
+
 
 class BigInt
 {
@@ -713,12 +716,18 @@ inline BigInt operator%=(BigInt &a, BigInt &b)
 int main()
 {
     iostream::sync_with_stdio(false);
-    BigInt sum(0);
-    string s;
-    while (cin >> s && s != "0")
-    {
-        BigInt temp(s);
-        sum += temp;
+    vector<BigInt> fib(5003);
+
+    fib[0] = 0;
+    fib[1] = 1;
+
+    for (int i = 2; i < sz(fib); i++) {
+        fib[i] = fib[i - 1] + fib[i - 2];
     }
-    cout << sum << endl;
+
+    int n;
+    while (cin >> n) {
+        cout << "The Fibonacci number for " << n << " is "
+             << fib[n] << endl;
+    }
 }
