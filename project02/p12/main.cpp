@@ -7,7 +7,7 @@ typedef long long ll;
 ll getClassValue(string s)
 {
     replace(begin(s), end(s), '-', ' ');
-    stringstream ss(s);
+    stringstream ss(s); // upper lower middle
 
     string out = "", temp;
     while (ss >> temp)
@@ -25,7 +25,7 @@ ll getClassValue(string s)
             out += "1";
         }
     }
-    reverse(begin(out), end(out));
+    reverse(begin(out), end(out)); //213
     while (sz(out) < 10)
     {
         out += "2";
@@ -33,7 +33,7 @@ ll getClassValue(string s)
     stringstream s1(out);
     ll res;
     s1 >> res;
-    return res;
+    return res; //213
 }
 
 int main()
@@ -49,26 +49,27 @@ int main()
         for (int j = 0; j < n; j++)
         {
             string s, s1, s2;
-            cin >> s >> s1 >> s2;
+            cin >> s >> s1 >> s2; // mom upper  class
             s.pop_back();
 
             v.emplace_back(s, s1);
         }
 
         stable_sort(begin(v), end(v), [](const pair<string, string> &a, const pair<string, string> &b)
-             {
-            if (getClassValue(a.second) > getClassValue(b.second))
-            {
-                return true;
-            }
-            else if (getClassValue(a.second) == getClassValue(b.second))
-            {
-                if (a.first < b.first)
-                {
-                    return true;
-                }
-            }
-                return false; });
+                    {
+                        if (getClassValue(a.second) > getClassValue(b.second))
+                        {
+                            return true;
+                        }
+                        else if (getClassValue(a.second) == getClassValue(b.second))
+                        {
+                            if (a.first < b.first)
+                            {
+                                return true;
+                            }
+                        }
+                        return false;
+                    });
 
         for (auto it : v)
         {

@@ -1,17 +1,18 @@
 #include <bits/stdc++.h>
+
 template <typename C>
 int sz(const C &c) { return static_cast<int>(c.size()); }
+
 using namespace std;
 
-struct f
+struct Skill
 {
-    string job;
-    int price;
+    string mSkill;
+    int mSalary;
 
-    f(string &j, int &p)
+    Skill(string skill, int salary)
+        : mSkill(skill), mSalary(salary)
     {
-        job = j;
-        price = p;
     }
 };
 
@@ -19,33 +20,40 @@ int main()
 {
     iostream::sync_with_stdio(false);
 
-    int m, n, price;
-    string job, text;
-    cin >> m >> n;
+    int nSkills, nTexts;
+    cin >> nSkills >> nTexts;
+    vector<Skill> skills;
 
-    vector<f> v;
-
-    while (m != 0)
+    for (int i = 0; i < nSkills; i++)
     {
-        cin >> job >> price;
-        v.emplace_back(job, price);
-        m--;
+        string skill;
+        int salary;
+
+        cin >> skill >> salary;
+
+        skills.push_back(Skill(skill, salary));
     }
 
-    while (n != 0)
+    sort(begin(skills), end(skills), [](Skill skill1, Skill skill2)
+         { return skill1.mSkill < skill2.mSkill; });
+
+    int result = 0;
+    string skill;
+
+    while (cin >> skill)
     {
-        int sum = 0;
-        while (cin >> text && text != ".")
+        if (skill == ".")
         {
-            for (auto it : v)
-            {
-                if (it.job == text)
-                {
-                    sum += it.price;
-                }
-            }
+            cout << result << endl;
+            result = 0;
         }
-        cout << sum << "\n";
-        n--;
+
+        auto it = lower_bound(begin(skills), end(skills), skill, [](Skill a, string b)
+                              { return a.mSkill < b; });
+                              
+        if (it != skills.end() && (it->mSkill == skill))
+        {
+            result += (it->mSalary);
+        }
     }
 }
