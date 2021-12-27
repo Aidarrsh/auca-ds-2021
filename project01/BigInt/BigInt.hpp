@@ -515,14 +515,17 @@ inline BigInt operator/(BigInt a, BigInt b)
 {
     BigInt r;
 
+    BigInt zero;
+    zero.mDigits.push_back(0);
+
     r.mDigits.clear();
 
-    if (a == BigInt())
+    if (a == zero)
     {
         return 0;
     }
 
-    if (b == BigInt())
+    if (b == zero)
     {
         throw
         std::runtime_error("Divisor can't be zero");
@@ -563,9 +566,6 @@ inline BigInt operator/(BigInt a, BigInt b)
     //     it1++;
     // }
 
-    BigInt zero;
-    zero.mDigits.push_back(0);
-
     while (it1 != a.mDigits.end()) // 1204 / 2
     {
         if (temp == zero)
@@ -574,10 +574,10 @@ inline BigInt operator/(BigInt a, BigInt b)
         }
         temp.mDigits.push_back(*it1);
 
-        if (temp == 0)
-        {
-            res = 0;
-        }
+        // if (temp == 0)
+        // {
+        //     res = 0;
+        // }
 
         while (temp >= b)
         {
