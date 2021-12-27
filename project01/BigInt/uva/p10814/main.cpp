@@ -713,22 +713,36 @@ inline BigInt operator%=(BigInt &a, BigInt &b)
 }
 
 
+BigInt gcd(BigInt a, BigInt b)
+{
+    a = abs(a);
+    b = abs(b);
+
+    while (a > 0 && b > 0)
+    {
+        if (a > b)
+        {
+            a %= b;
+        }
+        else
+        {
+            b %= a;
+        }
+    }
+    return a + b;
+}
+
 int main()
 {
-    iostream::sync_with_stdio(false);
-
-    vector<BigInt> fac(1000);
-    fac[0] = BigInt("1");
-
-    for (int i = 1; i <= 1000; i++)
+    int n;
+    cin >> n;
+    while (n--)
     {
-        fac[i] = fac[i - 1] * BigInt(to_string(i));
-    }
-
-    int num;
-    while (cin >> num)
-    {
-        cout << num << "!" << endl;
-        cout << fac[num] << endl;
+        string a, s, b;
+        while (cin >> a >> s >> b)
+        {
+            BigInt r = gcd(BigInt(a), BigInt(b));
+            cout << a / r << " / " << b / r << "\n";
+        }
     }
 }
