@@ -714,23 +714,13 @@ int main()
 {
     iostream::sync_with_stdio(false);
 
-    int a, b;
-    int count = 1;
-    while(cin>> a >> b && (a != 0 && b != 0))
+    long long t;
+    cin >> t;
+    while (t)
     {
-        BigInt sum(0);
-        for (int i =0; i < a;i++)
-        {
-            BigInt item;
-            cin >> item;
-            sum += item; 
-        }
-
-        cout << "Bill #" << count << " costs " << sum << ": each friend should pay ";
-        BigInt temp(b); 
-        sum /= temp;
-        cout <<  sum << endl;
-        count++;
-        cout << endl;
+        BigInt a, b;
+        cin >> a >> b;
+        cout << a - b << endl;
+        t--;
     }
 }
